@@ -1,0 +1,47 @@
+package org.example.alzo.entities;
+
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.example.alzo.entities.enums.Category;
+import org.example.alzo.entities.enums.Frequency;
+
+import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Task {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long taskID;
+    String description;
+    Frequency frequency;
+    DayOfWeek dayOfWeek;
+    int dayOfMonth;
+    LocalTime time;
+    int intervale;
+    boolean isCompleted;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY )
+    private List<Reminder> reminderList;
+
+
+}
