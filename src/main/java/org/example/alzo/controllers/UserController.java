@@ -7,10 +7,7 @@ import org.example.alzo.dtos.SignUpRequest;
 import org.example.alzo.entities.User;
 import org.example.alzo.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -30,6 +27,13 @@ public class UserController {
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
         SignInResponse response = userService.signIn(signInRequest);
         return ResponseEntity.ok(response);  // Return user details in the response
+    }
+
+
+    @GetMapping("/hola")
+    public String Hello()
+    {
+        return "hello";
     }
 
 }
