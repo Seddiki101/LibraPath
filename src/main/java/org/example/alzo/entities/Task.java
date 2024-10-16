@@ -1,5 +1,6 @@
 package org.example.alzo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,8 +27,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long taskID;
     String description;
+    @Enumerated(EnumType.STRING)
     Frequency frequency;
+    @Enumerated(EnumType.STRING)
     DayOfWeek dayOfWeek;
+
     int dayOfMonth;
     LocalTime time;
     int intervale;
@@ -41,6 +45,7 @@ public class Task {
     private User user;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY )
+    @JsonIgnore
     private List<Reminder> reminderList;
 
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.example.alzo.entities.Task;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,16 +23,22 @@ public class ReminderServiceImp implements ReminderService {
     @Override
     public Reminder createReminder(ReminderRequest reminderRequest) {
         // Check if the task exists
-        Task task = taskRepository.findById(reminderRequest.getTaskId())
-                .orElseThrow(() -> new IllegalStateException("Task not found"));
+        Optional<Task> task = taskRepository.findById(reminderRequest.getTaskId()) ;
 
-        // Create a new reminder
-        Reminder reminder = new Reminder();
-        reminder.setTime(reminderRequest.getTime());
-        reminder.setSent(reminderRequest.isSent());
+        if (task.isPresent()) {
+            Task existingTask = task.get();
 
-        // Save the reminder
-        return reminderRepository.save(reminder);
+            // Create a new reminder
+            Reminder reminder = new Reminder();
+            reminder.setTime(reminderRequest.getTime());
+            reminder.setSent(reminderRequest.isSent());
+            reminder.setTask(existingTask);
+
+            // Save the reminder
+            return reminderRepository.save(reminder);
+        }
+        else
+            return null;
     }
 
     @Override
@@ -46,11 +53,14 @@ public class ReminderServiceImp implements ReminderService {
     @Override
     public void deleteReminder(Long reminderId) {
         // Check if the reminder exists
-        Reminder reminder = reminderRepository.findById(reminderId)
-                .orElseThrow(() -> new IllegalStateException("Reminder not found"));
+        Optional <Reminder> reminderOptional = reminderRepository.findById(reminderId);
 
-        // Delete the reminder
-        reminderRepository.delete(reminder);
+        if (reminderOptional.isPresent()) {
+
+            Reminder reminder = reminderOptional.get();
+            // Delete the reminder
+            reminderRepository.delete(reminder);
+        }
     }
 
 }

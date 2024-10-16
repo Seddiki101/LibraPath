@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.alzo.dtos.ReminderRequest;
 import org.example.alzo.entities.Reminder;
 import org.example.alzo.services.ReminderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.alzo.entities.User;
@@ -21,7 +22,11 @@ public class ReminderController {
     @PostMapping("/create")
     public ResponseEntity<Reminder> createReminder(@RequestBody ReminderRequest reminderRequest) {
         Reminder reminder = reminderService.createReminder(reminderRequest);
-        return ResponseEntity.ok(reminder);
+        if(reminder != null)
+             return ResponseEntity.ok(reminder);
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
     }
 
     // 2. Get all reminders for a task
