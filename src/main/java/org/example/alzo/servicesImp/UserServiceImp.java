@@ -102,4 +102,10 @@ public class UserServiceImp implements UserService {
      else return null;
     }
 
+    @Override
+    public List<User> getAllUsers()
+    {
+        return userRepository.findAll();
+    }
+
 }

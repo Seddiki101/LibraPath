@@ -14,4 +14,5 @@ public interface UserService {
     SignInResponse signIn(SignInRequest signInRequest);
 
     List<Task> getTasksByUserId(Long userId);
+    List<User> getAllUsers();
 }
