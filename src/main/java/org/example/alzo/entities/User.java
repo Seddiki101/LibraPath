@@ -30,6 +30,9 @@ public class User {
     int age;
     String medicalCondition;
     String emergencyContact;
+    String description ; //like what he does for work
+    Date birthday ;
+    String location;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY )
     @JsonIgnore

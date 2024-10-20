@@ -48,6 +48,8 @@ public class UserServiceImp implements UserService {
             user.setAge(signUpRequest.getAge());
             user.setMedicalCondition(signUpRequest.getMedicalCondition());
             user.setEmergencyContact(signUpRequest.getEmergencyContact());
+            user.setDescription(signUpRequest.getDescription() );
+            user.setBirthday(signUpRequest.getBirthday());
 
             // Save user to the repository
             return userRepository.save(user);
@@ -79,7 +81,9 @@ public class UserServiceImp implements UserService {
                     user.getLastName(),
                     user.getAge(),
                     user.getMedicalCondition(),
-                    user.getEmergencyContact()
+                    user.getEmergencyContact(),
+                    user.getDescription(),
+                    user.getBirthday()
             );
             return res;
         }
